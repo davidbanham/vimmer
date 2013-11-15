@@ -5,6 +5,7 @@ import (
   "os/exec"
   "fmt"
   "log"
+  "bufio"
 )
 func main() {
   files := os.Args[1:]
@@ -22,5 +23,20 @@ func main() {
     if err != nil {
       log.Fatal(err)
     }
+    if i != len(files) - 1 {
+      check_if_continue()
+    }
+  }
+}
+
+func check_if_continue() {
+  fmt.Println("Enter to continue, anything else to bail")
+  reader := bufio.NewReader(os.Stdin)
+  resp, err := reader.ReadString('\n')
+  if resp != "\n" {
+    log.Fatal("Got something other than enter: ", resp)
+  }
+  if err != nil {
+    log.Fatal(err)
   }
 }
